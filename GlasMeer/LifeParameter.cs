@@ -51,5 +51,9 @@ namespace Mastersign.Bible.GlasOcean
         public float MaxPregnancyAge { get; set; }
 
         public float PregnancyProbability { get; set; }
+
+        public float MinBirthShift { get; set; }
+
+        public float MaxBirthShift { get; set; }
     }
 }

@@ -28,42 +28,63 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+            System.Windows.Forms.ToolStripLabel tslScale;
+            System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.propertyRender = new System.Windows.Forms.PropertyGrid();
             this.picture = new de.mastersign.controls.ZoomPictureBox();
             this.propertyLife = new System.Windows.Forms.PropertyGrid();
-            this.flowLayout = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnStart = new System.Windows.Forms.Button();
-            this.btnNextPopulationSeed = new System.Windows.Forms.Button();
-            this.btnNextDecisionSeed = new System.Windows.Forms.Button();
-            this.flowLayoutMenu = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnLoad = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btnSavePicture = new System.Windows.Forms.Button();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tsbOpen = new System.Windows.Forms.ToolStripButton();
+            this.tsbSave = new System.Windows.Forms.ToolStripButton();
+            this.tsbNewPopulation = new System.Windows.Forms.ToolStripButton();
+            this.tsbNewVariation = new System.Windows.Forms.ToolStripButton();
+            this.tscbScale = new System.Windows.Forms.ToolStripComboBox();
+            this.tsbRender = new System.Windows.Forms.ToolStripButton();
+            this.tsbCancel = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbSavePicture = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            tslScale = new System.Windows.Forms.ToolStripLabel();
+            toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tableLayout.SuspendLayout();
-            this.flowLayout.SuspendLayout();
-            this.flowLayoutMenu.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tslScale
+            // 
+            tslScale.Name = "tslScale";
+            tslScale.Size = new System.Drawing.Size(37, 22);
+            tslScale.Text = "Scale:";
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // tableLayout
             // 
             this.tableLayout.ColumnCount = 2;
             this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
             this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayout.Controls.Add(this.propertyRender, 0, 2);
-            this.tableLayout.Controls.Add(this.picture, 1, 1);
-            this.tableLayout.Controls.Add(this.propertyLife, 0, 1);
-            this.tableLayout.Controls.Add(this.flowLayout, 1, 0);
-            this.tableLayout.Controls.Add(this.flowLayoutMenu, 0, 0);
+            this.tableLayout.Controls.Add(this.propertyRender, 0, 1);
+            this.tableLayout.Controls.Add(this.picture, 1, 0);
+            this.tableLayout.Controls.Add(this.propertyLife, 0, 0);
             this.tableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayout.Location = new System.Drawing.Point(0, 0);
+            this.tableLayout.Location = new System.Drawing.Point(0, 25);
             this.tableLayout.Name = "tableLayout";
-            this.tableLayout.RowCount = 3;
-            this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayout.RowCount = 2;
             this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayout.Size = new System.Drawing.Size(814, 566);
+            this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayout.Size = new System.Drawing.Size(814, 541);
             this.tableLayout.TabIndex = 0;
             // 
             // propertyRender
@@ -71,9 +92,9 @@
             this.propertyRender.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyRender.HelpVisible = false;
             this.propertyRender.LineColor = System.Drawing.SystemColors.ControlDark;
-            this.propertyRender.Location = new System.Drawing.Point(3, 303);
+            this.propertyRender.Location = new System.Drawing.Point(3, 273);
             this.propertyRender.Name = "propertyRender";
-            this.propertyRender.Size = new System.Drawing.Size(294, 260);
+            this.propertyRender.Size = new System.Drawing.Size(294, 265);
             this.propertyRender.TabIndex = 2;
             this.propertyRender.ToolbarVisible = false;
             // 
@@ -101,7 +122,7 @@
             this.picture.InfoForegroundColor = System.Drawing.SystemColors.WindowText;
             this.picture.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
             this.picture.IsBoundToMaster = false;
-            this.picture.Location = new System.Drawing.Point(300, 35);
+            this.picture.Location = new System.Drawing.Point(300, 0);
             this.picture.Margin = new System.Windows.Forms.Padding(0);
             this.picture.Master = null;
             this.picture.Name = "picture";
@@ -114,7 +135,7 @@
             this.picture.ShowRotationTools = false;
             this.picture.ShowSelectionTools = false;
             this.picture.ShowZoomLevelTools = true;
-            this.picture.Size = new System.Drawing.Size(514, 531);
+            this.picture.Size = new System.Drawing.Size(514, 541);
             this.picture.SuppressInterpolation = false;
             this.picture.TabIndex = 0;
             this.picture.WaitAnimationInterval = 50;
@@ -127,95 +148,115 @@
             this.propertyLife.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyLife.HelpVisible = false;
             this.propertyLife.LineColor = System.Drawing.SystemColors.ControlDark;
-            this.propertyLife.Location = new System.Drawing.Point(3, 38);
+            this.propertyLife.Location = new System.Drawing.Point(3, 3);
             this.propertyLife.Name = "propertyLife";
-            this.propertyLife.Size = new System.Drawing.Size(294, 259);
+            this.propertyLife.Size = new System.Drawing.Size(294, 264);
             this.propertyLife.TabIndex = 1;
             this.propertyLife.ToolbarVisible = false;
             // 
-            // flowLayout
+            // toolStrip1
             // 
-            this.flowLayout.AutoSize = true;
-            this.flowLayout.Controls.Add(this.btnStart);
-            this.flowLayout.Controls.Add(this.btnNextPopulationSeed);
-            this.flowLayout.Controls.Add(this.btnNextDecisionSeed);
-            this.flowLayout.Controls.Add(this.btnSavePicture);
-            this.flowLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayout.Location = new System.Drawing.Point(303, 3);
-            this.flowLayout.Name = "flowLayout";
-            this.flowLayout.Size = new System.Drawing.Size(508, 29);
-            this.flowLayout.TabIndex = 3;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbOpen,
+            this.tsbSave,
+            toolStripSeparator1,
+            this.tsbNewPopulation,
+            this.tsbNewVariation,
+            toolStripSeparator2,
+            tslScale,
+            this.tscbScale,
+            this.tsbRender,
+            this.tsbCancel,
+            this.toolStripSeparator3,
+            this.tsbSavePicture});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(814, 25);
+            this.toolStrip1.TabIndex = 3;
+            this.toolStrip1.Text = "toolStrip1";
             // 
-            // btnStart
+            // tsbOpen
             // 
-            this.btnStart.Location = new System.Drawing.Point(3, 3);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(57, 23);
-            this.btnStart.TabIndex = 0;
-            this.btnStart.Text = "Render";
-            this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            this.tsbOpen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbOpen.Image = ((System.Drawing.Image)(resources.GetObject("tsbOpen.Image")));
+            this.tsbOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbOpen.Name = "tsbOpen";
+            this.tsbOpen.Size = new System.Drawing.Size(40, 22);
+            this.tsbOpen.Text = "Open";
+            this.tsbOpen.ToolTipText = "Open configuration from *.gmeer file.";
+            this.tsbOpen.Click += new System.EventHandler(this.OpenConfigurationHandler);
             // 
-            // btnNextPopulationSeed
+            // tsbSave
             // 
-            this.btnNextPopulationSeed.Location = new System.Drawing.Point(66, 3);
-            this.btnNextPopulationSeed.Name = "btnNextPopulationSeed";
-            this.btnNextPopulationSeed.Size = new System.Drawing.Size(93, 23);
-            this.btnNextPopulationSeed.TabIndex = 0;
-            this.btnNextPopulationSeed.Text = "New Structure";
-            this.btnNextPopulationSeed.UseVisualStyleBackColor = true;
-            this.btnNextPopulationSeed.Click += new System.EventHandler(this.btnNextPopulationSeed_Click);
+            this.tsbSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbSave.Image = ((System.Drawing.Image)(resources.GetObject("tsbSave.Image")));
+            this.tsbSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbSave.Name = "tsbSave";
+            this.tsbSave.Size = new System.Drawing.Size(35, 22);
+            this.tsbSave.Text = "Save";
+            this.tsbSave.Click += new System.EventHandler(this.SaveConfigurationHandler);
             // 
-            // btnNextDecisionSeed
+            // tsbNewPopulation
             // 
-            this.btnNextDecisionSeed.Location = new System.Drawing.Point(165, 3);
-            this.btnNextDecisionSeed.Name = "btnNextDecisionSeed";
-            this.btnNextDecisionSeed.Size = new System.Drawing.Size(93, 23);
-            this.btnNextDecisionSeed.TabIndex = 0;
-            this.btnNextDecisionSeed.Text = "New Variation";
-            this.btnNextDecisionSeed.UseVisualStyleBackColor = true;
-            this.btnNextDecisionSeed.Click += new System.EventHandler(this.btnNextDecisionSeed_Click);
+            this.tsbNewPopulation.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbNewPopulation.Image = ((System.Drawing.Image)(resources.GetObject("tsbNewPopulation.Image")));
+            this.tsbNewPopulation.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbNewPopulation.Name = "tsbNewPopulation";
+            this.tsbNewPopulation.Size = new System.Drawing.Size(96, 22);
+            this.tsbNewPopulation.Text = "New Population";
+            this.tsbNewPopulation.Click += new System.EventHandler(this.NewPopulationHandler);
             // 
-            // flowLayoutMenu
+            // tsbNewVariation
             // 
-            this.flowLayoutMenu.AutoSize = true;
-            this.flowLayoutMenu.Controls.Add(this.btnLoad);
-            this.flowLayoutMenu.Controls.Add(this.btnSave);
-            this.flowLayoutMenu.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutMenu.Location = new System.Drawing.Point(3, 3);
-            this.flowLayoutMenu.Name = "flowLayoutMenu";
-            this.flowLayoutMenu.Size = new System.Drawing.Size(294, 29);
-            this.flowLayoutMenu.TabIndex = 4;
+            this.tsbNewVariation.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbNewVariation.Image = ((System.Drawing.Image)(resources.GetObject("tsbNewVariation.Image")));
+            this.tsbNewVariation.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbNewVariation.Name = "tsbNewVariation";
+            this.tsbNewVariation.Size = new System.Drawing.Size(84, 22);
+            this.tsbNewVariation.Text = "New Variation";
+            this.tsbNewVariation.Click += new System.EventHandler(this.NewVariationHandler);
             // 
-            // btnLoad
+            // tscbScale
             // 
-            this.btnLoad.Location = new System.Drawing.Point(3, 3);
-            this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(75, 23);
-            this.btnLoad.TabIndex = 0;
-            this.btnLoad.Text = "Load";
-            this.btnLoad.UseVisualStyleBackColor = true;
-            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
+            this.tscbScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.tscbScale.MaxDropDownItems = 10;
+            this.tscbScale.Name = "tscbScale";
+            this.tscbScale.Size = new System.Drawing.Size(75, 25);
             // 
-            // btnSave
+            // tsbRender
             // 
-            this.btnSave.Location = new System.Drawing.Point(84, 3);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 1;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.tsbRender.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbRender.Image = ((System.Drawing.Image)(resources.GetObject("tsbRender.Image")));
+            this.tsbRender.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbRender.Name = "tsbRender";
+            this.tsbRender.Size = new System.Drawing.Size(51, 22);
+            this.tsbRender.Text = "Render!";
+            this.tsbRender.Click += new System.EventHandler(this.RenderHandler);
             // 
-            // btnSavePicture
+            // tsbCancel
             // 
-            this.btnSavePicture.Location = new System.Drawing.Point(264, 3);
-            this.btnSavePicture.Name = "btnSavePicture";
-            this.btnSavePicture.Size = new System.Drawing.Size(92, 23);
-            this.btnSavePicture.TabIndex = 1;
-            this.btnSavePicture.Text = "Save Picture";
-            this.btnSavePicture.UseVisualStyleBackColor = true;
-            this.btnSavePicture.Click += new System.EventHandler(this.btnSavePicture_Click);
+            this.tsbCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbCancel.Image = ((System.Drawing.Image)(resources.GetObject("tsbCancel.Image")));
+            this.tsbCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCancel.Name = "tsbCancel";
+            this.tsbCancel.Size = new System.Drawing.Size(47, 22);
+            this.tsbCancel.Text = "Cancel";
+            this.tsbCancel.Click += new System.EventHandler(this.CancelHandler);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tsbSavePicture
+            // 
+            this.tsbSavePicture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbSavePicture.Image = ((System.Drawing.Image)(resources.GetObject("tsbSavePicture.Image")));
+            this.tsbSavePicture.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbSavePicture.Name = "tsbSavePicture";
+            this.tsbSavePicture.Size = new System.Drawing.Size(75, 22);
+            this.tsbSavePicture.Text = "Save Picture";
+            this.tsbSavePicture.Click += new System.EventHandler(this.SavePictureHandler);
             // 
             // MainForm
             // 
@@ -223,14 +264,15 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(814, 566);
             this.Controls.Add(this.tableLayout);
+            this.Controls.Add(this.toolStrip1);
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.tableLayout.ResumeLayout(false);
-            this.tableLayout.PerformLayout();
-            this.flowLayout.ResumeLayout(false);
-            this.flowLayoutMenu.ResumeLayout(false);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -238,15 +280,17 @@
 
         private System.Windows.Forms.TableLayoutPanel tableLayout;
         private de.mastersign.controls.ZoomPictureBox picture;
-        private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.PropertyGrid propertyRender;
         private System.Windows.Forms.PropertyGrid propertyLife;
-        private System.Windows.Forms.FlowLayoutPanel flowLayout;
-        private System.Windows.Forms.Button btnNextPopulationSeed;
-        private System.Windows.Forms.Button btnNextDecisionSeed;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutMenu;
-        private System.Windows.Forms.Button btnLoad;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnSavePicture;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton tsbOpen;
+        private System.Windows.Forms.ToolStripButton tsbSave;
+        private System.Windows.Forms.ToolStripButton tsbNewPopulation;
+        private System.Windows.Forms.ToolStripButton tsbNewVariation;
+        private System.Windows.Forms.ToolStripComboBox tscbScale;
+        private System.Windows.Forms.ToolStripButton tsbRender;
+        private System.Windows.Forms.ToolStripButton tsbCancel;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton tsbSavePicture;
     }
 }

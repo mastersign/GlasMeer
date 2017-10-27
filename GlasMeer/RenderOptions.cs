@@ -84,5 +84,56 @@ namespace Mastersign.Bible.GlasOcean
         public bool ShowAlternatives { get; set; }
 
         public bool ShowBirthPoint { get; set; }
+
+        public int PivotIndex { get; set; }
+
+        public bool PivotOnly { get; set; }
+
+        public bool HighlightPivot { get; set; }
+
+        [XmlIgnore]
+        public Color HighlightColor { get; set; }
+
+        [XmlElement(nameof(HighlightColor))]
+        [Browsable(false)]
+        public string HighlightColorHtml
+        {
+            get { return ColorTranslator.ToHtml(HighlightColor); }
+            set { HighlightColor = ColorTranslator.FromHtml(value); }
+        }
+
+        public float HighlightDimOpacity { get; set; }
+
+        public RenderOptions Scale(float factor)
+        {
+            return new RenderOptions
+            {
+                CanvasSize = new Size(
+                    (int)(CanvasSize.Width * factor),
+                    (int)(CanvasSize.Height * factor)),
+                LineWidth = LineWidth * factor,
+                Padding = new Padding(
+                    (int)(Padding.Left * factor),
+                    (int)(Padding.Top * factor),
+                    (int)(Padding.Right * factor),
+                    (int)(Padding.Bottom * factor)),
+                TimeStretch = TimeStretch * factor,
+                HorizonRatio = HorizonRatio,
+                PositionStretch = PositionStretch * factor,
+                BackgroundColor = BackgroundColor,
+                BirthPointColor = BirthPointColor,
+                BirthPointSize = BirthPointSize * factor,
+                NeutralColor = NeutralColor,
+                GoodColor = GoodColor,
+                BadColor = BadColor,
+                ShowAlternatives = ShowAlternatives,
+                ShowBirthPoint = ShowBirthPoint,
+                PivotIndex = PivotIndex,
+                PivotOnly = PivotOnly,
+                HighlightPivot = HighlightPivot,
+                HighlightColor = HighlightColor,
+                HighlightDimOpacity = HighlightDimOpacity
+            };
+        }
     }
 }

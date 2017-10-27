@@ -9,9 +9,9 @@ namespace Mastersign.Bible.GlasOcean
 {
     static class ColorMath
     {
-        private static float Mix(float a, float b, float value) => a + (b - a) * value;
+        public static float Mix(float a, float b, float value) => a + (b - a) * value;
 
-        private static byte ColorValue(float v) => (byte)Math.Min(byte.MaxValue, Math.Max(byte.MinValue, v));
+        public static byte ColorValue(float v) => (byte)Math.Min(byte.MaxValue, Math.Max(byte.MinValue, v));
 
         public static Color Mix(Color c1, Color c2, float value, float alpha = 1.0f)
             => Color.FromArgb(

@@ -16,10 +16,12 @@ namespace Mastersign.Bible.GlasOcean
         GlasMeerConfiguration config;
         readonly Random rand = new Random();
         bool isRendering;
+        CancellationToken cancellationToken;
 
         public MainForm()
         {
             InitializeComponent();
+            InitializeUI();
             InitializeConfiguration();
             UpdateUI();
         }
@@ -31,6 +33,20 @@ namespace Mastersign.Bible.GlasOcean
             SetBounds(sb.X + 100, sb.Y + 100, sb.Width - 200, sb.Height - 200);
             WindowState = FormWindowState.Maximized;
             Render();
+        }
+
+        private void InitializeUI()
+        {
+            tscbScale.Items.Add(0.5f);
+            tscbScale.Items.Add(0.75f);
+            tscbScale.Items.Add(1.0f);
+            tscbScale.Items.Add(1.5f);
+            tscbScale.Items.Add(2.0f);
+            tscbScale.Items.Add(3.0f);
+            tscbScale.Items.Add(4.0f);
+            tscbScale.Items.Add(5.0f);
+            tscbScale.Items.Add(10.0f);
+            tscbScale.SelectedItem = 1.0f;
         }
 
         private void InitializeConfiguration()
@@ -46,6 +62,13 @@ namespace Mastersign.Bible.GlasOcean
         {
             propertyLife.SelectedObject = config.LifeParameter;
             propertyRender.SelectedObject = config.RenderOptions;
+            tsbOpen.Enabled = !IsRendering;
+            tsbNewPopulation.Enabled = !IsRendering;
+            tsbNewVariation.Enabled = !IsRendering;
+            tscbScale.Enabled = !IsRendering;
+            tsbRender.Enabled = !IsRendering;
+            tsbCancel.Enabled = IsRendering;
+            tsbSavePicture.Enabled = !IsRendering;
         }
 
         public bool IsRendering
@@ -54,7 +77,7 @@ namespace Mastersign.Bible.GlasOcean
             set
             {
                 isRendering = value;
-                flowLayout.Enabled = !isRendering;
+                UpdateUI();
             }
         }
 
@@ -105,6 +128,11 @@ namespace Mastersign.Bible.GlasOcean
                 BadColor = Color.FromArgb(160, 255, 0, 0),
                 ShowAlternatives = true,
                 ShowBirthPoint = true,
+                PivotIndex = 0,
+                PivotOnly = false,
+                HighlightPivot = false,
+                HighlightColor = Color.Red,
+                HighlightDimOpacity = 0.5f,
             };
         }
 
@@ -112,18 +140,22 @@ namespace Mastersign.Bible.GlasOcean
         {
             if (IsRendering) return;
             IsRendering = true;
-            picture.Image = await RenderAsync();
+            var scaleFactor = (float)tscbScale.SelectedItem;
+            ShowPicture(await RenderAsync(scaleFactor));
             IsRendering = false;
         }
 
-        private Task<Bitmap> RenderAsync()
+        private Task<Bitmap> RenderAsync(float scaleFactor)
         {
+            cancellationToken = new CancellationToken();
             var task = new Task<Bitmap>(() =>
             {
                 var individualGenerator = new IndividualGenerator(config.LifeParameter);
-                var renderEngine = new RenderEngine(config.RenderOptions);
+                var renderEngine = new RenderEngine(config.RenderOptions.Scale(scaleFactor));
                 var individuals = individualGenerator.Generate();
-                return renderEngine.Render(individuals, SnapshotHandler, new TimeSpan(0, 0, 0, 0, 200));
+                return renderEngine.Render(individuals, 
+                    SnapshotHandler, new TimeSpan(0, 0, 0, 0, 500), 
+                    cancellationToken);
             });
             task.Start();
             return task;
@@ -136,29 +168,18 @@ namespace Mastersign.Bible.GlasOcean
                 BeginInvoke((Action<Bitmap>)SnapshotHandler, bmp);
                 return;
             }
+            ShowPicture(bmp);
+        }
+
+        private void ShowPicture(Bitmap bmp)
+        {
+            var oldSize = picture.Image?.Size ?? new Size();
+            var newSize = bmp?.Size ?? new Size();
             picture.Image = bmp;
+            if (oldSize != newSize) picture.ViewFit();
         }
 
-        private void btnStart_Click(object sender, EventArgs e)
-        {
-            Render();
-        }
-
-        private void btnNextPopulationSeed_Click(object sender, EventArgs e)
-        {
-            config.LifeParameter.PopulationRandomSeed = rand.Next();
-            UpdateUI();
-            Render();
-        }
-
-        private void btnNextDecisionSeed_Click(object sender, EventArgs e)
-        {
-            config.LifeParameter.DecisionRandomSeed = rand.Next();
-            UpdateUI();
-            Render();
-        }
-
-        private void btnLoad_Click(object sender, EventArgs e)
+        private void OpenConfigurationHandler(object sender, EventArgs e)
         {
             var dialog = new OpenFileDialog
             {
@@ -181,8 +202,7 @@ namespace Mastersign.Bible.GlasOcean
                 }
             }
         }
-
-        private void btnSave_Click(object sender, EventArgs e)
+        private void SaveConfigurationHandler(object sender, EventArgs e)
         {
             var dialog = new SaveFileDialog
             {
@@ -199,8 +219,30 @@ namespace Mastersign.Bible.GlasOcean
                 config.Safe(dialog.FileName);
             }
         }
+        private void NewPopulationHandler(object sender, EventArgs e)
+        {
+            config.LifeParameter.PopulationRandomSeed = rand.Next();
+            UpdateUI();
+            Render();
+        }
 
-        private void btnSavePicture_Click(object sender, EventArgs e)
+        private void NewVariationHandler(object sender, EventArgs e)
+        {
+            config.LifeParameter.DecisionRandomSeed = rand.Next();
+            UpdateUI();
+            Render();
+        }
+        private void RenderHandler(object sender, EventArgs e)
+        {
+            Render();
+        }
+
+        private void CancelHandler(object sender, EventArgs e)
+        {
+            cancellationToken?.Cancel();
+        }
+
+        private void SavePictureHandler(object sender, EventArgs e)
         {
             var dialog = new SaveFileDialog
             {
