@@ -121,6 +121,9 @@ namespace Mastersign.Bible.GlasOcean
                 MinPregnancyAge = 20f,
                 MaxPregnancyAge = 60f,
                 PregnancyProbability = 0.2f,
+                MinBirthShift = 0.1f,
+                MaxBirthShift = 2f,
+                PositiveBirthShiftProbability = 0.5f,
             };
         }
 
@@ -142,7 +145,7 @@ namespace Mastersign.Bible.GlasOcean
                 BadColor = Color.FromArgb(160, 255, 0, 0),
                 ShowAlternatives = true,
                 ShowBirthPoint = true,
-                PivotIndex = 0,
+                PivotIndex = 0L,
                 PivotOnly = false,
                 HighlightPivot = false,
                 HighlightColor = Color.Red,

@@ -55,5 +55,7 @@ namespace Mastersign.Bible.GlasOcean
         public float MinBirthShift { get; set; }
 
         public float MaxBirthShift { get; set; }
+
+        public float PositiveBirthShiftProbability { get; set; }
     }
 }

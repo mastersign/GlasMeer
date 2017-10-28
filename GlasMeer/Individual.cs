@@ -10,6 +10,7 @@ namespace Mastersign.Bible.GlasOcean
     {
         public float BirthTime;
         public float BirthPosition;
+        public float BirthShift;
         public Decision DecisionChain;
         public float Reality;
 
@@ -41,11 +42,15 @@ namespace Mastersign.Bible.GlasOcean
         }
 
         public LifePoint BirthPoint
-            => new LifePoint(BirthTime, BirthPosition, 0f, Reality);
+            => new LifePoint(BirthTime, BirthPosition + BirthShift, 0f, Reality);
+
+        private Decision BirthShiftDecision
+            => new Decision(0f, 0f, 0f, BirthShift, Reality * 0.5f) { FollowUp = DecisionChain };
 
         public IEnumerable<LifeStep> Steps(bool withAlternatives = true)
             => DecisionChain != null
-                ? IterateSteps(BirthPoint, DecisionChain, withAlternatives)
+                ? IterateSteps(new LifePoint(BirthTime, BirthPosition, 0f, Reality), 
+                    BirthShiftDecision, withAlternatives)
                 : Array.Empty<LifeStep>();
     }
 

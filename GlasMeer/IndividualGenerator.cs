@@ -26,19 +26,25 @@ namespace Mastersign.Bible.GlasOcean
             return GenerateIndividual(0, 0, 1f);
         }
 
-        private IEnumerable<Individual> GenerateIndividual(float birthTime, float birthPosition, float reality)
+        private IEnumerable<Individual> GenerateIndividual(float birthTime, float birthPosition, float reality, bool birthShift = false)
         {
             var individual = new Individual
             {
                 Reality = reality,
                 BirthTime = birthTime,
                 BirthPosition = birthPosition,
-                DecisionChain = GenerateDecisionTree(reality, 0f, 0)
+                BirthShift = birthShift
+                    ? (decisionRand.ProbableEvent(Parameter.PositiveBirthShiftProbability)
+                        ? decisionRand.NextFloat(Parameter.MinBirthShift, Parameter.MaxBirthShift)
+                        : -decisionRand.NextFloat(Parameter.MinBirthShift, Parameter.MaxBirthShift))
+                    : 0f,
+                DecisionChain = GenerateDecisionTree(reality, 0f, 0),
             };
             yield return individual;
 
+            // create children
             var age = 0f;
-            var p = birthPosition;
+            var p = individual.BirthPosition + individual.BirthShift;
             var d = individual.DecisionChain;
             do
             {
@@ -50,7 +56,7 @@ namespace Mastersign.Bible.GlasOcean
                     age >= Parameter.MinPregnancyAge &&
                     populationRand.ProbableEvent(Parameter.PregnancyProbability))
                 {
-                    foreach (var child in GenerateIndividual(t, p, d.Reality))
+                    foreach (var child in GenerateIndividual(t, p, d.Reality, true))
                     {
                         yield return child;
                     }
