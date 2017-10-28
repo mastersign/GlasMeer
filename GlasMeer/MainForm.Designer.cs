@@ -32,6 +32,10 @@
             System.Windows.Forms.ToolStripLabel tslScale;
             System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+            System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+            System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
+            System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
             this.tableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.propertyRender = new System.Windows.Forms.PropertyGrid();
             this.picture = new de.mastersign.controls.ZoomPictureBox();
@@ -46,11 +50,22 @@
             this.tsbCancel = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbSavePicture = new System.Windows.Forms.ToolStripButton();
+            this.tsbNewPivot = new System.Windows.Forms.ToolStripButton();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.tsslIndividuals = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsslDecisions = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsslAlternativeDecisions = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsslRenderTime = new System.Windows.Forms.ToolStripStatusLabel();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             tslScale = new System.Windows.Forms.ToolStripLabel();
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
+            toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayout.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripSeparator1
@@ -84,7 +99,7 @@
             this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayout.Size = new System.Drawing.Size(814, 541);
+            this.tableLayout.Size = new System.Drawing.Size(814, 519);
             this.tableLayout.TabIndex = 0;
             // 
             // propertyRender
@@ -92,9 +107,9 @@
             this.propertyRender.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyRender.HelpVisible = false;
             this.propertyRender.LineColor = System.Drawing.SystemColors.ControlDark;
-            this.propertyRender.Location = new System.Drawing.Point(3, 273);
+            this.propertyRender.Location = new System.Drawing.Point(3, 262);
             this.propertyRender.Name = "propertyRender";
-            this.propertyRender.Size = new System.Drawing.Size(294, 265);
+            this.propertyRender.Size = new System.Drawing.Size(294, 254);
             this.propertyRender.TabIndex = 2;
             this.propertyRender.ToolbarVisible = false;
             // 
@@ -135,7 +150,7 @@
             this.picture.ShowRotationTools = false;
             this.picture.ShowSelectionTools = false;
             this.picture.ShowZoomLevelTools = true;
-            this.picture.Size = new System.Drawing.Size(514, 541);
+            this.picture.Size = new System.Drawing.Size(514, 519);
             this.picture.SuppressInterpolation = false;
             this.picture.TabIndex = 0;
             this.picture.WaitAnimationInterval = 50;
@@ -150,7 +165,7 @@
             this.propertyLife.LineColor = System.Drawing.SystemColors.ControlDark;
             this.propertyLife.Location = new System.Drawing.Point(3, 3);
             this.propertyLife.Name = "propertyLife";
-            this.propertyLife.Size = new System.Drawing.Size(294, 264);
+            this.propertyLife.Size = new System.Drawing.Size(294, 253);
             this.propertyLife.TabIndex = 1;
             this.propertyLife.ToolbarVisible = false;
             // 
@@ -162,6 +177,7 @@
             toolStripSeparator1,
             this.tsbNewPopulation,
             this.tsbNewVariation,
+            this.tsbNewPivot,
             toolStripSeparator2,
             tslScale,
             this.tscbScale,
@@ -258,12 +274,88 @@
             this.tsbSavePicture.Text = "Save Picture";
             this.tsbSavePicture.Click += new System.EventHandler(this.SavePictureHandler);
             // 
+            // tsbNewPivot
+            // 
+            this.tsbNewPivot.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbNewPivot.Image = ((System.Drawing.Image)(resources.GetObject("tsbNewPivot.Image")));
+            this.tsbNewPivot.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbNewPivot.Name = "tsbNewPivot";
+            this.tsbNewPivot.Size = new System.Drawing.Size(65, 22);
+            this.tsbNewPivot.Text = "New Pivot";
+            this.tsbNewPivot.Click += new System.EventHandler(this.NewPivotHandler);
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            toolStripStatusLabel1,
+            this.tsslIndividuals,
+            toolStripStatusLabel2,
+            this.tsslDecisions,
+            toolStripStatusLabel3,
+            this.tsslAlternativeDecisions,
+            toolStripStatusLabel4,
+            this.tsslRenderTime});
+            this.statusStrip.Location = new System.Drawing.Point(0, 544);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(814, 22);
+            this.statusStrip.TabIndex = 4;
+            this.statusStrip.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            toolStripStatusLabel1.Size = new System.Drawing.Size(67, 17);
+            toolStripStatusLabel1.Text = "Individuals:";
+            // 
+            // tsslIndividuals
+            // 
+            this.tsslIndividuals.Name = "tsslIndividuals";
+            this.tsslIndividuals.Size = new System.Drawing.Size(13, 17);
+            this.tsslIndividuals.Text = "0";
+            // 
+            // toolStripStatusLabel2
+            // 
+            toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            toolStripStatusLabel2.Size = new System.Drawing.Size(60, 17);
+            toolStripStatusLabel2.Text = "Decisions:";
+            // 
+            // tsslDecisions
+            // 
+            this.tsslDecisions.Name = "tsslDecisions";
+            this.tsslDecisions.Size = new System.Drawing.Size(13, 17);
+            this.tsslDecisions.Text = "0";
+            // 
+            // toolStripStatusLabel3
+            // 
+            toolStripStatusLabel3.Name = "toolStripStatusLabel3";
+            toolStripStatusLabel3.Size = new System.Drawing.Size(120, 17);
+            toolStripStatusLabel3.Text = "Alternative Decisions:";
+            // 
+            // tsslAlternativeDecisions
+            // 
+            this.tsslAlternativeDecisions.Name = "tsslAlternativeDecisions";
+            this.tsslAlternativeDecisions.Size = new System.Drawing.Size(13, 17);
+            this.tsslAlternativeDecisions.Text = "0";
+            // 
+            // toolStripStatusLabel4
+            // 
+            toolStripStatusLabel4.Name = "toolStripStatusLabel4";
+            toolStripStatusLabel4.Size = new System.Drawing.Size(77, 17);
+            toolStripStatusLabel4.Text = "Render Time:";
+            // 
+            // tsslRenderTime
+            // 
+            this.tsslRenderTime.Name = "tsslRenderTime";
+            this.tsslRenderTime.Size = new System.Drawing.Size(18, 17);
+            this.tsslRenderTime.Text = "0s";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(814, 566);
             this.Controls.Add(this.tableLayout);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip1);
             this.Name = "MainForm";
             this.Text = "MainForm";
@@ -271,6 +363,8 @@
             this.tableLayout.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -292,5 +386,11 @@
         private System.Windows.Forms.ToolStripButton tsbCancel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton tsbSavePicture;
+        private System.Windows.Forms.ToolStripButton tsbNewPivot;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel tsslIndividuals;
+        private System.Windows.Forms.ToolStripStatusLabel tsslDecisions;
+        private System.Windows.Forms.ToolStripStatusLabel tsslAlternativeDecisions;
+        private System.Windows.Forms.ToolStripStatusLabel tsslRenderTime;
     }
 }

@@ -85,7 +85,7 @@ namespace Mastersign.Bible.GlasOcean
 
         public bool ShowBirthPoint { get; set; }
 
-        public int PivotIndex { get; set; }
+        public long PivotIndex { get; set; }
 
         public bool PivotOnly { get; set; }
 

@@ -81,6 +81,20 @@ namespace Mastersign.Bible.GlasOcean
             }
         }
 
+        private RenderStats renderStats;
+        private RenderStats LastRenderStats
+        {
+            get => renderStats;
+            set
+            {
+                renderStats = value;
+                tsslIndividuals.Text = renderStats.IndividualCount.ToString();
+                tsslDecisions.Text = renderStats.DecisionCount.ToString();
+                tsslAlternativeDecisions.Text = renderStats.AlternativeDecisionCount.ToString();
+                tsslRenderTime.Text = renderStats.Time.ToString();
+            }
+        }
+
         private LifeParameter DefaultLifeParameter()
         {
             return new LifeParameter
@@ -141,38 +155,40 @@ namespace Mastersign.Bible.GlasOcean
             if (IsRendering) return;
             IsRendering = true;
             var scaleFactor = (float)tscbScale.SelectedItem;
-            ShowPicture(await RenderAsync(scaleFactor));
+            ShowRenderResult(await RenderAsync(scaleFactor, SnapshotHandler));
             IsRendering = false;
         }
 
-        private Task<Bitmap> RenderAsync(float scaleFactor)
+        private Task<RenderResult> RenderAsync(float scaleFactor, Action<RenderResult> snapshotHandler)
         {
             cancellationToken = new CancellationToken();
-            var task = new Task<Bitmap>(() =>
+            var task = new Task<RenderResult>(() =>
             {
                 var individualGenerator = new IndividualGenerator(config.LifeParameter);
                 var renderEngine = new RenderEngine(config.RenderOptions.Scale(scaleFactor));
                 var individuals = individualGenerator.Generate();
                 return renderEngine.Render(individuals, 
-                    SnapshotHandler, new TimeSpan(0, 0, 0, 0, 500), 
+                    snapshotHandler, new TimeSpan(0, 0, 0, 0, 500), 
                     cancellationToken);
             });
             task.Start();
             return task;
         }
 
-        private void SnapshotHandler(Bitmap bmp)
+        private void SnapshotHandler(RenderResult result)
         {
             if (InvokeRequired)
             {
-                BeginInvoke((Action<Bitmap>)SnapshotHandler, bmp);
+                BeginInvoke((Action<RenderResult>)SnapshotHandler, result);
                 return;
             }
-            ShowPicture(bmp);
+            ShowRenderResult(result);
         }
 
-        private void ShowPicture(Bitmap bmp)
+        private void ShowRenderResult(RenderResult result)
         {
+            LastRenderStats = result.Stats;
+            var bmp = result.Picture;
             var oldSize = picture.Image?.Size ?? new Size();
             var newSize = bmp?.Size ?? new Size();
             picture.Image = bmp;
@@ -232,6 +248,15 @@ namespace Mastersign.Bible.GlasOcean
             UpdateUI();
             Render();
         }
+        private void NewPivotHandler(object sender, EventArgs e)
+        {
+            config.RenderOptions.PivotIndex = LastRenderStats != null
+                ? (long)Math.Floor(rand.NextDouble() * LastRenderStats.IndividualCount)
+                : 0L;
+            UpdateUI();
+            Render();
+        }
+
         private void RenderHandler(object sender, EventArgs e)
         {
             Render();

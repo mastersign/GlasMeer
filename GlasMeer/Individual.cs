@@ -8,7 +8,6 @@ namespace Mastersign.Bible.GlasOcean
 {
     class Individual
     {
-        public Individual Parent;
         public float BirthTime;
         public float BirthPosition;
         public Decision DecisionChain;

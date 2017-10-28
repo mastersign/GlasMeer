@@ -30,7 +30,6 @@ namespace Mastersign.Bible.GlasOcean
         {
             var individual = new Individual
             {
-                Parent = null,
                 Reality = reality,
                 BirthTime = birthTime,
                 BirthPosition = birthPosition,

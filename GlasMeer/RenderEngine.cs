@@ -13,6 +13,11 @@ namespace Mastersign.Bible.GlasOcean
     {
         public RenderOptions Options { get; set; }
 
+        private long individualCount;
+        private long alternativeIndividualCount;
+        private long lifeStepCount;
+        private long alternativeLifeStepCount;
+
         public RenderEngine(RenderOptions options)
         {
             Options = options;
@@ -38,6 +43,11 @@ namespace Mastersign.Bible.GlasOcean
 
             foreach (var step in individual.Steps())
             {
+                if (step.To.Reality == 1f)
+                    lifeStepCount++;
+                else
+                    alternativeLifeStepCount++;
+
                 var value = step.To.Value;
                 var reality = step.To.Reality;
                 if (reality < 1f && !Options.ShowAlternatives) continue;
@@ -69,10 +79,26 @@ namespace Mastersign.Bible.GlasOcean
             }
         }
 
-        public Bitmap Render(IEnumerable<Individual> individuals,
-            Action<Bitmap> snapshotHandler, TimeSpan snapshotDelta,
+        private RenderResult BuildResult(TimeSpan time, Bitmap bmp)
+        {
+            return new RenderResult(bmp,
+                new RenderStats(
+                    time,
+                    individualCount,
+                    lifeStepCount / 2,
+                    alternativeIndividualCount,
+                    alternativeLifeStepCount / 2));
+        }
+
+        public RenderResult Render(IEnumerable<Individual> individuals,
+            Action<RenderResult> snapshotHandler, TimeSpan snapshotDelta,
             CancellationToken cancellationToken)
         {
+            individualCount = 0;
+            alternativeIndividualCount = 0;
+            lifeStepCount = 0;
+            alternativeLifeStepCount = 0;
+
             var bmp = new Bitmap(Options.CanvasSize.Width, Options.CanvasSize.Height, PixelFormat.Format32bppArgb);
             var g = Graphics.FromImage(bmp);
             g.Clear(Options.BackgroundColor);
@@ -81,13 +107,16 @@ namespace Mastersign.Bible.GlasOcean
             var t0 = DateTime.Now;
             var tRef = t0;
             Individual pivot = null;
-            int index = -1;
+            long index = -1;
             foreach (var individual in individuals)
             {
                 index++;
-                var pivotIndex = Options.PivotIndex;
-                if (pivotIndex > index && index > 0) pivotIndex = pivotIndex % index;
-                if (pivotIndex == index) pivot = individual;
+                if (individual.Reality == 1f)
+                    individualCount++;
+                else
+                    alternativeIndividualCount++;
+
+                if (Options.PivotIndex == index) pivot = individual;
                 if (cancellationToken.IsCancelled) break;
                 if (Options.PivotOnly) continue;
 
@@ -97,7 +126,7 @@ namespace Mastersign.Bible.GlasOcean
                 if (t > tRef + snapshotDelta)
                 {
                     tRef = t;
-                    snapshotHandler?.Invoke(new Bitmap(bmp));
+                    snapshotHandler?.Invoke(BuildResult(t - t0, new Bitmap(bmp)));
                 }
             }
             if (Options.HighlightPivot && !Options.PivotOnly)
@@ -122,7 +151,7 @@ namespace Mastersign.Bible.GlasOcean
                 }
             }
             g.Dispose();
-            return bmp;
+            return BuildResult(DateTime.Now - t0, bmp);
         }
     }
 }
